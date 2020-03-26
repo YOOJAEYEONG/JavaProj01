@@ -1,13 +1,11 @@
-package ver04;
+package ver05;
 
 import java.util.Scanner;
 
 
 public class PhoneBookManager  {
 	
-//	PhoneInfo normal;
-//	PhoneSchoolInfo school;
-//	PhoneCompanyInfo com;
+
 	
 	Scanner scan = new Scanner(System.in);
 	PhoneInfo[] arrPhoneInfo = new PhoneInfo[100];
