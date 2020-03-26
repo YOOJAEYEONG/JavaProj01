@@ -15,10 +15,13 @@ public class PhoneBookVer5 {
 		
 		
 		while(true) {
-			
 			pbmanager.printMenu();
-			
-			switch (scan.nextInt()) {
+			try {
+				int selectMenu = scan.nextInt();
+			} catch (MenuSelectException e) {
+				e.printStackTrace();
+			}
+			switch (selectMenu) {
 			case MenuItem.SET_DATA://입력
 				
 					System.out.println("데이터 입력을 시작합니다.\n1.일반  2.동창  3.회사\n");
@@ -69,7 +72,12 @@ public class PhoneBookVer5 {
 	}
 }
 
-
+class MenuSelectException extends NumberFormatException{
+	
+	
+	
+	
+}
 
 
 
