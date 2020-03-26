@@ -3,7 +3,7 @@ package ver05;
 import java.util.Scanner;
 
 
-public class PhoneBookManager  {
+public class PhoneBookManager implements MenuItem  {
 	
 
 	
@@ -23,22 +23,19 @@ public class PhoneBookManager  {
 	}
 	public void dataInput(int humanType){
 		
+		//공통사항
+		System.out.println("이름:\n");
+		name=scan.next();
+		System.out.println("전화번호:\n");
+		phoneNum=scan.next();
 		
 		switch (humanType) {
-		case 1://일반
-			System.out.println("이름:\n");
-			name=scan.next();
-			System.out.println("전화번호:\n");
-			phoneNum=scan.next();
+		case SubMenuItem.NORMAL:
 			arrPhoneInfo[indexArr++] = new PhoneInfo(name, phoneNum);
 			break;
 
-		case 2://동창
+		case SubMenuItem.CLASSMATE:
 			
-			System.out.println("이름:\n");
-			name=scan.next();
-			System.out.println("전화번호:\n");
-			phoneNum=scan.next();
 			System.out.println("전공:\n");
 			major=scan.next();
 			System.out.println("학년:\n");
@@ -48,11 +45,7 @@ public class PhoneBookManager  {
 					new PhoneSchoolInfo(name, phoneNum, major, grade);
 			break;
 			
-		case 3://회사
-			System.out.println("이름:\n");
-			name = scan.next();
-			System.out.println("전화번호:\n");
-			phoneNum = scan.next();
+		case SubMenuItem.COMPANY:
 			System.out.println("회사:\n");
 			companyName = scan.next();
 			
