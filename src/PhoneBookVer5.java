@@ -2,48 +2,26 @@ import java.util.Scanner;
 
 import ver05.MenuItem;
 import ver05.PhoneBookManager;
-import ver05.SubMenuItem;
 
 public class PhoneBookVer5 {
 
 	public static void main(String[] args) throws Exception{
 
 		Scanner scan = new Scanner(System.in);
-		
 		PhoneBookManager pbmanager = new PhoneBookManager();
-		
-		
 		
 		while(true) {
 			pbmanager.printMenu();
-			try {
-				int selectMenu = scan.nextInt();
-			} catch (MenuSelectException e) {
-				e.printStackTrace();
-			}
+			
+			
+			int selectMenu = scan.nextInt();
+			
+			
 			switch (selectMenu) {
 			case MenuItem.SET_DATA://입력
 				
-					System.out.println("데이터 입력을 시작합니다.\n1.일반  2.동창  3.회사\n");
-					switch (scan.nextInt()) {
-					
-					case SubMenuItem.NORMAL:
-						pbmanager.dataInput(SubMenuItem.NORMAL);
-						System.out.println("데이터 입력이 완료되었습니다.\n");
-						break;
-					case SubMenuItem.CLASSMATE:
-						pbmanager.dataInput(SubMenuItem.CLASSMATE);
-						System.out.println("데이터 입력이 완료되었습니다.\n");
-						break;
-					case SubMenuItem.COMPANY:
-						pbmanager.dataInput(SubMenuItem.COMPANY);
-						System.out.println("데이터 입력이 완료되었습니다.\n");
-						break;
-					default:
-						System.out.println("잘못입력하였습니다.");
-						break;
-					}
-
+				System.out.println("데이터 입력을 시작합니다.\n1.일반  2.동창  3.회사\n");
+				pbmanager.dataInput();
 				
 				break;
 			case MenuItem.SEARCH://검색
@@ -72,12 +50,7 @@ public class PhoneBookVer5 {
 	}
 }
 
-class MenuSelectException extends NumberFormatException{
-	
-	
-	
-	
-}
+
 
 
 

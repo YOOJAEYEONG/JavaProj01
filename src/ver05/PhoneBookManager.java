@@ -21,17 +21,23 @@ public class PhoneBookManager implements MenuItem  {
 				+ "4. 주소록 출력\n"
 				+ "5. 프로그램 종료\n");
 	}
-	public void dataInput(int humanType){
+	public void dataInput(){
+		
+		
+		int	selectInputMenu = scan.nextInt();
+			
+		
 		
 		//공통사항
 		System.out.println("이름:\n");
-		name=scan.next();
+		name = scan.next();
 		System.out.println("전화번호:\n");
-		phoneNum=scan.next();
+		phoneNum = scan.next();
 		
-		switch (humanType) {
+		switch (selectInputMenu) {
 		case SubMenuItem.NORMAL:
 			arrPhoneInfo[indexArr++] = new PhoneInfo(name, phoneNum);
+			System.out.println("데이터 입력이 완료되었습니다.\n");
 			break;
 
 		case SubMenuItem.CLASSMATE:
@@ -43,6 +49,7 @@ public class PhoneBookManager implements MenuItem  {
 			
 			arrPhoneInfo[indexArr++] =
 					new PhoneSchoolInfo(name, phoneNum, major, grade);
+			System.out.println("데이터 입력이 완료되었습니다.\n");
 			break;
 			
 		case SubMenuItem.COMPANY:
@@ -51,15 +58,13 @@ public class PhoneBookManager implements MenuItem  {
 			
 			arrPhoneInfo[indexArr++] =
 					new PhoneCompanyInfo(name, phoneNum,companyName);
-			
-			
+			System.out.println("데이터 입력이 완료되었습니다.\n");
+			break;
+
 		default:
 			System.out.println("잘못입력하였습니다.");
 			break;
 		}
-		
-		
-		
 	}
 	public void dataSearch(String searchName) {
 		
