@@ -1,14 +1,27 @@
-package ver07;
+package ver08;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import ver07.MenuSelectException;
-import ver07.PhoneInfo;
+import ver08.PhoneInfo;
+import ver08.MenuSelectException;
 
-public class PhoneBookManager implements MenuItem  {
+@SuppressWarnings("serial")
+public class PhoneBookManager implements MenuItem, Serializable  {
+
+
+
+
+
 
 	Scanner scan = new Scanner(System.in);
 	HashSet<PhoneInfo> phoneBookSet = new HashSet<PhoneInfo>();
@@ -53,6 +66,8 @@ public class PhoneBookManager implements MenuItem  {
 						break;
 
 					case MenuItem.EXIT:
+						saveFile();
+						System.out.println("주소록에 "+phoneBookSet.size()+"명이 저장되었습니다.");	    
 						System.out.println("프로그램 종료합니다.");
 						System.exit(0);
 					}	
@@ -67,7 +82,6 @@ public class PhoneBookManager implements MenuItem  {
 				System.out.println("2사용자정의예외:메뉴선택이 잘못되었습니다.");
 			}
 		}
-
 	}
 	public void dataInput()    {
 		int grade;
@@ -159,8 +173,6 @@ public class PhoneBookManager implements MenuItem  {
 	}
 	public void dataDelete(){
 		System.out.println("데이터 삭제를 시작합니다.\n이름 : \n");
-
-		System.out.println("데이터 삭제를 시작합니다.\n이름 : \n");
 		Iterator<PhoneInfo> itr = phoneBookSet.iterator();
 		Iterator<PhoneInfo> itr2 = phoneBookSet.iterator();
 		boolean searchResult=false;
@@ -180,6 +192,7 @@ public class PhoneBookManager implements MenuItem  {
 		} catch (NullPointerException e) {
 			System.out.println("데이터가 없습니다.");
 		}
+
 	}
 	public void dataAllShow() {
 		Iterator<PhoneInfo> itr = phoneBookSet.iterator();
@@ -188,6 +201,7 @@ public class PhoneBookManager implements MenuItem  {
 			System.out.println(String.valueOf(itr.next()));
 			//null일 경우 예외를 발생시키지 않고 null을 출력한다
 		}
+		
 	}
 	public void saveCheckData(PhoneInfo newCase) {
 		if(false == phoneBookSet.add(newCase)) {
@@ -203,6 +217,55 @@ public class PhoneBookManager implements MenuItem  {
 		}
 		else	System.out.println("데이터 입력이 완료되었습니다.\n");
 	}
-
-
+	public void saveFile() {
+		try {
+			String src = "C:/02WorkSpace/JavaProj01/src/ver08/AddressBook.obj";
+			
+			FileOutputStream fileOut = new FileOutputStream(src);
+			ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+			objOut.writeObject(phoneBookSet);
+			objOut.close();
+			fileOut.close();
+			System.out.println("주소록 저장완료");
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("IO에러발생");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@SuppressWarnings("unchecked")
+	public void loadFile() {
+		String src = "C:/02WorkSpace/JavaProj01/src/ver08/AddressBook.obj";
+		try {
+			FileInputStream fileIn = new FileInputStream(src);
+			ObjectInputStream objIn = new ObjectInputStream(fileIn);
+			phoneBookSet = (HashSet<PhoneInfo>)objIn.readObject();
+			/*
+			Iterator<PhoneInfo> itr = phoneBookSet.iterator();
+			while(itr.hasNext()) {
+				System.out.println(""+itr.next());
+			}
+			*/
+			
+			System.out.println("주소록 로드완료");
+			objIn.close();
+			fileIn.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (ClassCastException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 }
+
+
+
+
+
+
+
