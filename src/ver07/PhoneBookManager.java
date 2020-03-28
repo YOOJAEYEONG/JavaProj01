@@ -10,9 +10,6 @@ import ver06.MenuSelectException;
 public class PhoneBookManager implements MenuItem  {
 	
 	
-
-	
-	
 	
 	Scanner scan = new Scanner(System.in);
 	HashSet<PhoneInfo> phoneBook = new HashSet<PhoneInfo>();
