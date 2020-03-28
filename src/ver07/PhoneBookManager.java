@@ -8,15 +8,18 @@ import java.util.Scanner;
 import ver06.MenuSelectException;
 
 public class PhoneBookManager implements MenuItem  {
-	
-	
-	
+
+
+
+
+
+
 	Scanner scan = new Scanner(System.in);
 	HashSet<PhoneInfo> phoneBook = new HashSet<PhoneInfo>();
-	
-	
+
+
 	public void printMenu(){
-		
+
 		int selectMenu = 0 ;
 		while(true) {
 			System.out.println("\n선택하세요...\n"
@@ -25,11 +28,11 @@ public class PhoneBookManager implements MenuItem  {
 					+ "3. 데이터 삭제\n"
 					+ "4. 주소록 출력\n"
 					+ "5. 프로그램 종료\n");
-			
+
 			try {
 				selectMenu = scan.nextInt();								
 				//scan.nextLine();
-			
+
 				if( selectMenu<1 || selectMenu>5 ) {
 					MenuSelectException e = 
 							 new MenuSelectException();
@@ -40,19 +43,19 @@ public class PhoneBookManager implements MenuItem  {
 					case MenuItem.SET_DATA:
 						dataInput();
 						break;
-						
+
 					case MenuItem.SEARCH:
 						dataSearch();
 						break;
-						
+
 					case MenuItem.DELETE:
 						dataDelete();
 						break;
-						
+
 					case MenuItem.PRINT_BOOK:
 						dataAllShow();
 						break;
-						
+
 					case MenuItem.EXIT:
 						System.out.println("프로그램 종료합니다.");
 						System.exit(0);
@@ -68,14 +71,14 @@ public class PhoneBookManager implements MenuItem  {
 				System.out.println("2사용자정의예외:메뉴선택이 잘못되었습니다.");
 			}
 		}
-		
+
 	}
 	public void dataInput()    {
 		int grade;
 		int selectInputMenu = 0;
 		String name = "", major, phoneNum, companyName;
 		System.out.println("데이터 입력을 시작합니다.\n1.일반  2.동창  3.회사\n");
-		
+
 			try {
 				selectInputMenu = scan.nextInt();
 				if(  selectInputMenu<1 || selectInputMenu>3 ) {
@@ -89,36 +92,36 @@ public class PhoneBookManager implements MenuItem  {
 					name = scan.next();
 					System.out.println("전화번호:\n");
 					phoneNum = scan.next();
-					
+
 					switch (selectInputMenu) {
-					
+
 					case SubMenuItem.NORMAL:
-						
+
 						PhoneInfo personNormal = new PhoneInfo(name, phoneNum);
 						saveCheckData(personNormal);
 						break;
-						
+
 					case SubMenuItem.CLASSMATE:
-						
+
 						System.out.println("전공:\n");
 						major=scan.next();
 						System.out.println("학년:\n");
 						grade=scan.nextInt();
-						
+
 						PhoneInfo classMate = new PhoneSchoolInfo(name, phoneNum, major, grade);
 						saveCheckData(classMate);
 						break;
-						
-						
+
+
 					case SubMenuItem.COMPANY:
-						
+
 						System.out.println("회사:\n");
 						companyName = scan.next();
-						
+
 						PhoneInfo CompanyMate = new PhoneCompanyInfo(name, phoneNum,companyName);
 						saveCheckData(CompanyMate);
 						break;
-						
+
 					}//switch
 					System.out.println(phoneBook.size());
 					System.out.println(phoneBook.toString());
@@ -132,24 +135,24 @@ public class PhoneBookManager implements MenuItem  {
 				scan.nextLine();
 				dataInput();
 			}
-		
-		
+
+
 	}
 	public void dataSearch() {
 		System.out.println("데이터 검색을 시작합니다.\n이름:\n");
 		Iterator<PhoneInfo> itr = phoneBook.iterator();
-		
+
 		try {
 			String searchName = scan.next();
 			while(itr.hasNext()) {
 				Object object = itr.next();
 				System.out.println(object);
-				
+
 //				if(object. instanceof String) {
 //				}
 			}
-			
-			
+
+
 //			for(int i=0; i <= phoneBook.size() ; i++  ) {
 //				if(arrPhoneInfo[i].getName().equals(searchName) ) {
 //					((PhoneInfo) arrPhoneInfo[i]).showPhoneInfo();
@@ -160,18 +163,18 @@ public class PhoneBookManager implements MenuItem  {
 //					System.out.println("검색결과없음");
 //				}
 //			}
-		
+
 			System.out.println("검색종료");
 		} catch (NullPointerException e) {
 			System.out.println("찾을 데이터가 없습니다");
 		} catch (InputMismatchException e) {
 			System.out.println("숫자를 입력하세요.");
 		} 
-		
+
 	}
 	public void dataDelete(){
 		System.out.println("데이터 삭제를 시작합니다.\n이름 : \n");
-		
+
 		try {
 			String deleteName = scan.next();
 //			for(int i=0; i <= arrPhoneInfo.length ; i++  ) {
@@ -194,7 +197,7 @@ public class PhoneBookManager implements MenuItem  {
 		} catch (NullPointerException e) {
 			System.out.println("데이터가 없습니다.");
 		}
-		
+
 	}
 	public void dataAllShow() {
 		Iterator<PhoneInfo> itr = phoneBook.iterator();
@@ -202,8 +205,8 @@ public class PhoneBookManager implements MenuItem  {
 			while(itr.hasNext()) {
 				System.out.println(itr.next());
 			}
-			
-			
+
+
 		} catch (NullPointerException e) {
 			System.out.println("출력할 데이터가 없습니다.");
 		}
@@ -211,7 +214,7 @@ public class PhoneBookManager implements MenuItem  {
 	public void saveCheckData(PhoneInfo newCase) {
 		if(false == phoneBook.add(newCase)) {
 			System.out.println(newCase.name+" 의 중복된 이름이 발견되었습니다. (덮어쓰기 1:예 / 2:아니오)");
-			
+
 			if(scan.nextInt()==1) {
 				phoneBook.remove(newCase);
 				phoneBook.add(newCase);
@@ -225,7 +228,6 @@ public class PhoneBookManager implements MenuItem  {
 			System.out.println("데이터 입력이 완료되었습니다.\n");
 		}
 	}
-	
-	
-}
 
+
+}
