@@ -23,15 +23,17 @@ public class PhoneBookManager  {
 	public void dataSearch(String searchName) {
 		
 		try {
+			boolean result = false;
 			for(int i=0; i <= arrPhoneInfo.length ; i++  ) {
 				if(arrPhoneInfo[i].getName().equals(searchName)) {
-					System.out.println("참진입");
-					((PhoneInfo) arrPhoneInfo[i]).showPhoneInfo();
+					result = true;
+					arrPhoneInfo[i].showPhoneInfo();
 					System.out.println("데이터 검색이 완료되었습니다.\n");
 					break;
 				}
+				else result = false;
 			}
-			System.out.println("검색결과없음");
+			System.out.println(result ? "" :"검색결과가 없습니다");
 		} catch (NullPointerException e) {	}
 		
 	}
@@ -39,8 +41,7 @@ public class PhoneBookManager  {
 		try {
 			for(int i=0; i <= arrPhoneInfo.length ; i++  ) {
 				if(arrPhoneInfo[i].getName().equals(deleteName)) {
-					System.out.println("일치하는 이름을 찾음");
-					
+					System.out.println("데이터 삭제를 시작합니다...");
 					for(int j=i; j <= arrPhoneInfo.length ; j++  ) {
 						arrPhoneInfo[j] = arrPhoneInfo[j+1];
 						if(arrPhoneInfo[j+1]==null) {

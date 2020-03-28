@@ -10,7 +10,6 @@ public class PhoneBookVer3 {
 
 		Scanner scan = new Scanner(System.in);
 		
-		//Object[] arrPhoneInfo = new PhoneInfo[100];
 		
 		PhoneBookManager pbmanager = new PhoneBookManager();
 		
@@ -24,9 +23,8 @@ public class PhoneBookVer3 {
 			
 			switch (val) {
 			case 1://입력
-					System.out.println("데이터 입력을 시작합니다.\n");
+					System.out.println("데이터 입력을 시작합니다.\n이름 : ");
 					
-					System.out.println("이름:\n");
 					name = scan.next();
 					System.out.println("전화번호:\n");
 					phoneNum = scan.next();
