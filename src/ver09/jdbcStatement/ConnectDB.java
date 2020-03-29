@@ -44,7 +44,7 @@ public abstract class ConnectDB {
 			//2.커넥션 객체를 통해 연결
 			con = DriverManager.getConnection(
 					"jdbc:oracle:thin://@localhost:1521:orcl",
-					"kosmo","1234"
+					"scott","1234"
 					);
 			System.out.println("오라클 DB연결 성공");
 		} catch (ClassNotFoundException e) {

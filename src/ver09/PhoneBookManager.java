@@ -19,18 +19,31 @@ public class PhoneBookManager {
 	public PhoneBookManager() {
 		
 		try {
-			String sql = 
+			
+			String sqlCreateTable = 
 					" create table phonebook_tb( " + 
 							"    \"이름\" NVARCHAR2(20) primary key, " + 
 							"    \"전화번호\" NVARCHAR2(11), " + 
 							"    \"생일\" NVARCHAR2(20) " + 
 							" )";
 			icoimpl.stmt = icoimpl.con.createStatement();
-			icoimpl.rs = icoimpl.stmt.executeQuery(sql);
-			
+			icoimpl.rs = icoimpl.stmt.executeQuery(sqlCreateTable);
 			System.out.println("테이블생성됨");
+			
+			String sqlNewSequence = 
+					"create sequence seq_phonebook " + 
+					"    increment by 1 " + 
+					"    maxvalue 100 " + 
+					"    minvalue 1 " + 
+					"    nocycle " + 
+					"    nocache ";
+			icoimpl.stmt = icoimpl.con.createStatement();
+			icoimpl.rs = icoimpl.stmt.executeQuery(sqlNewSequence);
+			System.out.println("seq_phonebook 시퀀스 생성됨");
+			
 		} catch (SQLSyntaxErrorException e) {
 			System.out.println("기존 테이블을 계속사용합니다.");
+			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
