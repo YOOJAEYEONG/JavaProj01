@@ -2,6 +2,7 @@ package ver08;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class PhoneSchoolInfo extends PhoneInfo implements Serializable{
 
 	String major;

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 //인터페이스를 구현하는 클래스는 이름선언시 뒤에 Impl을 붙여주는것이 명시적으로 좋다.
@@ -12,19 +13,18 @@ public class IConnectImpl implements IConnect {
 
 	//동적쿼리를 위한 객체
 	public Connection con;
-	public PreparedStatement psmt;
+	public PreparedStatement psmt;//(dataInput() 이용
 	public ResultSet rs;
+	public Statement stmt;
+	
 	
 	public IConnectImpl() {
-		System.out.println("IConnectImpl 기본생성자 호출");
-	}
-	public IConnectImpl(String user, String pass) {
-		System.out.println("IConnectImpl 인자생성자 호출");
+		
 		try {
 			//드라이버 로드
 			Class.forName(ORACLE_DRIVER);
 			//DB연결
-			connect(user, pass);
+			connect();
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
 			e.printStackTrace();
@@ -32,10 +32,11 @@ public class IConnectImpl implements IConnect {
 	}
 	
 	@Override
-	public void connect(String user, String pass) {
+	public void connect() {
 
 		try {
-			con = DriverManager.getConnection(ORACLE_URL, user, pass);
+			con = DriverManager.getConnection(ORACLE_URL, ID, PASS);
+			if(con!=null)	System.out.println("DB연결됨");
 		} catch (SQLException e) {
 			System.out.println("데이터페이스 연결 오류");
 			e.printStackTrace();
@@ -52,6 +53,7 @@ public class IConnectImpl implements IConnect {
 			if(con!=null)	con.close();
 			if(psmt!=null)	psmt.close();
 			if(rs!=null)	rs.close();
+			if(stmt!=null)	stmt.close();
 			System.out.println("자원반납완료");
 		} catch (Exception e) {
 			System.out.println("자원반납시에러");

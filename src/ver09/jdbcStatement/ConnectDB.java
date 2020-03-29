@@ -17,6 +17,7 @@ public abstract class ConnectDB {
 	protected Statement stmt;
 	protected ResultSet rs;
 	
+	
 	//UpdateSQL에서 사용할 인자생성자
 	public ConnectDB(String id, String pw) {
 		try {

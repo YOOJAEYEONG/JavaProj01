@@ -1,56 +1,23 @@
 package ver09.jdbcStatement;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 
-public class DeleteSQL {
+import ver09.jdbcConnect.IConnectImpl;
 
-	private Connection con;
-	private Statement stmt;
+public class DeleteSQL extends IConnectImpl{
 
-	//생성자에서는 드라이버에 대한 로드만 진행한다.
-	public DeleteSQL() {
+	@Override
+	public void execute() {
 		try {
-			Class.forName("oracle.jdbc.OracleDriver");
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패");
-			e.printStackTrace();
-		}
-	}
-
-	//Oracle DB에 대한 연결을 진행한다.
-	public void connect() {
-		try {
-			con = DriverManager.getConnection(
-					"jdbc:oracle:thin://@localhost:1521:orcl",
-					"kosmo",
-					"1234"
-					);
-		} catch (SQLException e) {
-			System.out.println("DB연결오류");
-			e.printStackTrace();
-		}
-	}
-	
-	//DB연결, 쿼리 준비, 쿼리전송, 쿼리 실행을 위한 메소드
-	private void execute() {
-		//여기서 실제 연결을 진행하다.
-		connect();
-		try {
-			stmt = con.createStatement();
-			/*
-			test1 삭제시 제약조건위배 예외발생
-			test99와 같이 DB에 입력되지 않은 레코드 삭제시에는 예외 없이 삭제되지 않음
-			 */
-			String query = "delete from member where id='test10'";
-			int affected = stmt.executeUpdate(query);
-			
-			System.out.println(affected+"행이 삭제됨");
-		
-		} catch (SQLException e) {
-			System.out.println("쿼리 실행 오류");
+			//1.DB연결 부모생성자호출시 자동연결됨
+			//2.쿼리문 준비
+			String query = "DELETE FROM phonebook_tb WHERE \"이름\" = ?";
+			//3.prepared 객체생성
+			psmt = con.prepareStatement(query);
+			//4. 인파라미터 값 설정
+			psmt.setString(1, scanValue("삭제할아이디"));
+			//5.쿼리실행 후 결과값 반환
+			System.out.println(psmt.executeUpdate()!= 0 ?"삭제되었습니다." : "삭제할 데이터가 없습니다.");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		finally {
@@ -58,21 +25,6 @@ public class DeleteSQL {
 		}
 	}
 	
-	private void close() {
-		try {
-			if(stmt!=null)	stmt.close(); //stmt객체가 열려있으면 닫는다
-			if(con!=null)	con.close();
-			System.out.println("자원반납완료");
-		} catch (Exception e) {
-			System.out.println("자원반납시 오류");
-			e.printStackTrace();
-		}
-	}
-	public static void main(String[] args) {
-
-		new DeleteSQL().execute();
-	}
-
 }
 
 

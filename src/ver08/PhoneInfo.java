@@ -2,6 +2,7 @@ package ver08;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class PhoneInfo implements Serializable {
 
 	//멤버변수

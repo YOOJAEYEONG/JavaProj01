@@ -19,10 +19,6 @@ import ver08.MenuSelectException;
 public class PhoneBookManager implements MenuItem, Serializable  {
 
 
-
-
-
-
 	Scanner scan = new Scanner(System.in);
 	HashSet<PhoneInfo> phoneBookSet = new HashSet<PhoneInfo>();
 
@@ -43,9 +39,7 @@ public class PhoneBookManager implements MenuItem, Serializable  {
 				//scan.nextLine();
 
 				if( selectMenu<1 || selectMenu>5 ) {
-					MenuSelectException e = 
-							 new MenuSelectException();
-					throw e;
+					throw new MenuSelectException();
 				}
 				else {
 					switch (selectMenu) {
@@ -89,62 +83,52 @@ public class PhoneBookManager implements MenuItem, Serializable  {
 		String name = "", major, phoneNum, companyName;
 		System.out.println("데이터 입력을 시작합니다.\n1.일반  2.동창  3.회사\n");
 
-			try {
-				selectInputMenu = scan.nextInt();
-				if(  selectInputMenu<1 || selectInputMenu>3 ) {
-					MenuSelectException e = 
-							 new MenuSelectException();
-					throw e;
-				}
-				else {
-					//공통사항
-					System.out.println("이름:\n");
-					name = scan.next();
-					System.out.println("전화번호:\n");
-					phoneNum = scan.next();
-
-					switch (selectInputMenu) {
-
-					case SubMenuItem.NORMAL:
-
-						PhoneInfo personNormal = new PhoneInfo(name, phoneNum);
-						saveCheckData(personNormal);
-						break;
-
-					case SubMenuItem.CLASSMATE:
-
-						System.out.println("전공:\n");
-						major=scan.next();
-						System.out.println("학년:\n");
-						grade=scan.nextInt();
-
-						PhoneInfo classMate = new PhoneSchoolInfo(name, phoneNum, major, grade);
-						saveCheckData(classMate);
-						break;
-
-
-					case SubMenuItem.COMPANY:
-
-						System.out.println("회사:\n");
-						companyName = scan.next();
-
-						PhoneInfo CompanyMate = new PhoneCompanyInfo(name, phoneNum,companyName);
-						saveCheckData(CompanyMate);
-						break;
-
-					}//switch
-				}//else
-			} catch (InputMismatchException e) {
-				System.out.println("InputMismatchException:숫자를입력하세요");
-				scan.nextLine();
-				dataInput();
-			} catch (MenuSelectException e) {
-				System.out.println("1~3숫자를입력하세요");
-				scan.nextLine();
-				dataInput();
+		try {
+			selectInputMenu = scan.nextInt();
+			if(  selectInputMenu<1 || selectInputMenu>3 ) {
+				throw new MenuSelectException();
 			}
+			else {
+				//공통사항
+				System.out.println("이름:\n");
+				name = scan.next();
+				System.out.println("전화번호:\n");
+				phoneNum = scan.next();
 
+				switch (selectInputMenu) {
+				case SubMenuItem.NORMAL:
+					PhoneInfo personNormal = new PhoneInfo(name, phoneNum);
+					saveCheckData(personNormal);
+					break;
 
+				case SubMenuItem.CLASSMATE:
+					System.out.println("전공:\n");
+					major=scan.next();
+					System.out.println("학년:\n");
+					grade=scan.nextInt();
+
+					PhoneInfo classMate = new PhoneSchoolInfo(name, phoneNum, major, grade);
+					saveCheckData(classMate);
+					break;
+
+				case SubMenuItem.COMPANY:
+					System.out.println("회사:\n");
+					companyName = scan.next();
+					PhoneInfo CompanyMate = new PhoneCompanyInfo(name, phoneNum,companyName);
+					saveCheckData(CompanyMate);
+					break;
+
+				}//switch
+			}//else
+		} catch (InputMismatchException e) {
+			System.out.println("InputMismatchException:숫자를입력하세요");
+			scan.nextLine();
+			dataInput();
+		} catch (MenuSelectException e) {
+			System.out.println("1~3숫자를입력하세요");
+			scan.nextLine();
+			dataInput();
+		}
 	}
 	public void dataSearch() {
 		System.out.println("데이터 검색을 시작합니다.\n이름:\n");
@@ -169,8 +153,8 @@ public class PhoneBookManager implements MenuItem, Serializable  {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
+	
 	public void dataDelete(){
 		System.out.println("데이터 삭제를 시작합니다.\n이름 : \n");
 		Iterator<PhoneInfo> itr = phoneBookSet.iterator();
@@ -192,37 +176,35 @@ public class PhoneBookManager implements MenuItem, Serializable  {
 		} catch (NullPointerException e) {
 			System.out.println("데이터가 없습니다.");
 		}
-
 	}
+	
 	public void dataAllShow() {
 		Iterator<PhoneInfo> itr = phoneBookSet.iterator();
-		
 		while(itr.hasNext()) {
 			System.out.println(String.valueOf(itr.next()));
 			//null일 경우 예외를 발생시키지 않고 null을 출력한다
 		}
-		
 	}
+	
 	public void saveCheckData(PhoneInfo newCase) {
 		if(false == phoneBookSet.add(newCase)) {
 			System.out.println(newCase.name+" 의 중복된 이름이 발견되었습니다. (덮어쓰기 1:예 / 2:아니오)");
-
 			if(scan.nextInt()==1) {
 				phoneBookSet.remove(newCase);
 				phoneBookSet.add(newCase);
 				System.out.println("데이터 입력이 완료되었습니다.\n");
 			}
 			else	System.out.println("저장취소");
-			
 		}
 		else	System.out.println("데이터 입력이 완료되었습니다.\n");
 	}
+	
 	public void saveFile() {
 		try {
 			String src = "C:/02WorkSpace/JavaProj01/src/ver08/AddressBook.obj";
-			
 			FileOutputStream fileOut = new FileOutputStream(src);
 			ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+			
 			objOut.writeObject(phoneBookSet);
 			objOut.close();
 			fileOut.close();
@@ -251,9 +233,7 @@ public class PhoneBookManager implements MenuItem, Serializable  {
 			System.out.println("주소록 로드완료");
 			objIn.close();
 			fileIn.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (ClassCastException e) {
+		} catch (FileNotFoundException | ClassCastException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();

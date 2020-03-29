@@ -2,12 +2,11 @@ package ver09.jdbcStatement;
 
 import java.sql.SQLException;
 
-public class SelectSQL1 extends ConnectDB{
+import ver09.jdbcConnect.IConnectImpl;
 
-	//생성자메소드
-	public SelectSQL1 () {
-		super();
-	}
+public class ShowAllSQL extends IConnectImpl{
+
+
 	
 	/*
 	ResultSet 클래스
@@ -29,38 +28,32 @@ public class SelectSQL1 extends ConnectDB{
 	@Override
 	public void execute() {
 		try {
-			stmt = con.createStatement();
+			String query = "SELECT * FROM phonebook_tb ";
 			
-			String query = "select id, pass, name, regidate from member";
 			
-			rs = stmt.executeQuery(query);
+			psmt = con.prepareStatement(query);
+            rs = psmt.executeQuery();
+
+            
 			while(rs.next()) {
-				String id = rs.getString(1);
-				String pw = rs.getString("pass");
-				String name = rs.getString("name");
-				
-				
+				String name = rs.getString("이름");
+				String phoneNumber = rs.getString("전화번호");
+				String birthday = rs.getString("생일");
 				/*
 				오라클의 date타입을 getDate()로 추출하면 2020-03-15
 				포맷으로 출력된다. 이경우 date형 자료가 되기때문에
 				java.sql.Date클래스의 참조변수로 저장해야한다.
 				 */
-				java.sql.Date regidate = rs.getDate("regiDate");
-				System.out.printf("%-10s %-10s %-13s %-20s\n",
-						id, pw, name, regidate);
+
+				System.out.printf("이름: %-10s 전화번호: %-15s 생일: %-10s \n",
+						name, phoneNumber, birthday);
 			}
-		} catch (SQLException e) {
-			System.out.println("쿼리오류발생");
+		} catch (SQLException | NullPointerException e) {
 			e.printStackTrace();
 		}
 		finally {
 			close();
 		}
 	}
-	public static void main(String[] args) {
-		
-		SelectSQL1 selectSQL1 = new SelectSQL1();
-		selectSQL1.execute();
-		
-	}
+	
 }

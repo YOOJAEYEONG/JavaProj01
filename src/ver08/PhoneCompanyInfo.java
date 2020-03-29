@@ -2,6 +2,7 @@ package ver08;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class PhoneCompanyInfo extends PhoneInfo implements Serializable{
 
 	String companyName;
