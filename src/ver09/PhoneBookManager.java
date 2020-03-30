@@ -43,9 +43,7 @@ public class PhoneBookManager {
 			
 		} catch (SQLSyntaxErrorException e) {
 			System.out.println("기존 테이블을 계속사용합니다.");
-			e.printStackTrace();
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 	

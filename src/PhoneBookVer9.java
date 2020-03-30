@@ -1,7 +1,6 @@
 
 
 import ver09.PhoneBookManager;
-import ver09.jdbcConnect.IConnectImpl;
 
 /*
 테이블 생성 

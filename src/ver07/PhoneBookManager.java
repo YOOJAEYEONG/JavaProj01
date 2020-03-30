@@ -29,11 +29,8 @@ public class PhoneBookManager implements MenuItem  {
 				selectMenu = scan.nextInt();								
 				//scan.nextLine();
 
-				if( selectMenu<1 || selectMenu>5 ) {
-					MenuSelectException e = 
-							 new MenuSelectException();
-					throw e;
-				}
+				if( selectMenu<1 || selectMenu>5 ) 
+					throw new MenuSelectException();
 				else {
 					switch (selectMenu) {
 					case MenuItem.SET_DATA:
@@ -77,11 +74,8 @@ public class PhoneBookManager implements MenuItem  {
 
 			try {
 				selectInputMenu = scan.nextInt();
-				if(  selectInputMenu<1 || selectInputMenu>3 ) {
-					MenuSelectException e = 
-							 new MenuSelectException();
-					throw e;
-				}
+				if(  selectInputMenu<1 || selectInputMenu>3 ) 
+					throw  new MenuSelectException();
 				else {
 					//공통사항
 					System.out.println("이름:\n");
@@ -92,29 +86,28 @@ public class PhoneBookManager implements MenuItem  {
 					switch (selectInputMenu) {
 
 					case SubMenuItem.NORMAL:
-
 						PhoneInfo personNormal = new PhoneInfo(name, phoneNum);
 						saveCheckData(personNormal);
 						break;
 
 					case SubMenuItem.CLASSMATE:
-
 						System.out.println("전공:\n");
 						major=scan.next();
 						System.out.println("학년:\n");
 						grade=scan.nextInt();
 
-						PhoneInfo classMate = new PhoneSchoolInfo(name, phoneNum, major, grade);
+						PhoneInfo classMate =
+								new PhoneSchoolInfo(name, phoneNum, major, grade);
 						saveCheckData(classMate);
 						break;
 
 
 					case SubMenuItem.COMPANY:
-
 						System.out.println("회사:\n");
 						companyName = scan.next();
 
-						PhoneInfo CompanyMate = new PhoneCompanyInfo(name, phoneNum,companyName);
+						PhoneInfo CompanyMate =
+								new PhoneCompanyInfo(name, phoneNum,companyName);
 						saveCheckData(CompanyMate);
 						break;
 
