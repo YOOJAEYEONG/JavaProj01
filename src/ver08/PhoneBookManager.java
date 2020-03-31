@@ -218,17 +218,12 @@ public class PhoneBookManager implements MenuItem, Serializable  {
 	}
 	@SuppressWarnings("unchecked")
 	public void loadFile() {
-		String src = "C:/02WorkSpace/JavaProj01/src/ver08/AddressBook.obj";
+		String src = "C:/03WorkSpace/JavaProj01/src/ver08/AddressBook.obj";
 		try {
 			FileInputStream fileIn = new FileInputStream(src);
 			ObjectInputStream objIn = new ObjectInputStream(fileIn);
 			phoneBookSet = (HashSet<PhoneInfo>)objIn.readObject();
-			/*
-			Iterator<PhoneInfo> itr = phoneBookSet.iterator();
-			while(itr.hasNext()) {
-				System.out.println(""+itr.next());
-			}
-			*/
+			
 			
 			System.out.println("주소록 로드완료");
 			objIn.close();
