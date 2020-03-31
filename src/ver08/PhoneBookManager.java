@@ -121,11 +121,11 @@ public class PhoneBookManager implements MenuItem, Serializable  {
 				}//switch
 			}//else
 		} catch (InputMismatchException e) {
-			System.out.println("InputMismatchException:숫자를입력하세요");
+			System.out.println("숫자를입력하세요");
 			scan.nextLine();
 			dataInput();
 		} catch (MenuSelectException e) {
-			System.out.println("1~3숫자를입력하세요");
+			System.out.println("1~3 중에 선택하세요");
 			scan.nextLine();
 			dataInput();
 		}
@@ -210,10 +210,9 @@ public class PhoneBookManager implements MenuItem, Serializable  {
 			fileOut.close();
 			System.out.println("주소록 저장완료");
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("IO에러발생");
+			System.out.println(e);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e);
 		}
 	}
 	@SuppressWarnings("unchecked")
@@ -229,11 +228,11 @@ public class PhoneBookManager implements MenuItem, Serializable  {
 			objIn.close();
 			fileIn.close();
 		} catch (FileNotFoundException | ClassCastException e) {
-			
+			System.out.println(e);
 		} catch (IOException e) {
-			
+			System.out.println(e);
 		} catch (ClassNotFoundException e) {
-			
+			System.out.println(e);
 		}
 	}
 }
