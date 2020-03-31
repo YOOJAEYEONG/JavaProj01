@@ -68,12 +68,12 @@ public class PhoneBookManager implements MenuItem, Serializable  {
 				}
 			}
 			catch (InputMismatchException e) {
-					System.out.println("InputMismatchException:숫자를입력하세요");
+					System.out.println("숫자를입력하세요");
 					scan.nextLine();
 					//버퍼날림(nextInt의 단점중 하나: 엔터값이 남아있는 버퍼를 제거 하는 기능)
 			}
 			catch (MenuSelectException e) {
-				System.out.println("2사용자정의예외:메뉴선택이 잘못되었습니다.");
+				System.out.println("메뉴선택이 잘못되었습니다.");
 			}
 		}
 	}
@@ -201,7 +201,7 @@ public class PhoneBookManager implements MenuItem, Serializable  {
 	
 	public void saveFile() {
 		try {
-			String src = "C:/02WorkSpace/JavaProj01/src/ver08/AddressBook.obj";
+			String src = "C:/03WorkSpace/JavaProj01/src/ver08/AddressBook.obj";
 			FileOutputStream fileOut = new FileOutputStream(src);
 			ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
 			
@@ -229,11 +229,11 @@ public class PhoneBookManager implements MenuItem, Serializable  {
 			objIn.close();
 			fileIn.close();
 		} catch (FileNotFoundException | ClassCastException e) {
-			e.printStackTrace();
+			
 		} catch (IOException e) {
-			e.printStackTrace();
+			
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			
 		}
 	}
 }
